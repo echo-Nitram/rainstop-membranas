@@ -44,7 +44,7 @@ h1, h2, h3, .font-display {
   padding: 0.85rem 1.75rem;
   border-radius: 999px;
   transition: transform 0.15s ease, filter 0.15s ease;
-  white-space: nowrap;
+  text-align: center;
 }
 .btn:hover { transform: translateY(-1px); filter: brightness(1.06); }
 .btn:active { transform: translateY(0); }
