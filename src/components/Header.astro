@@ -1,0 +1,33 @@
+---
+import WhatsAppButton from "./WhatsAppButton.astro";
+import { WA_MESSAGES } from "../consts";
+
+const navLinks = [
+  { href: "#servicios", label: "Servicios" },
+  { href: "#trabajos", label: "Trabajos" },
+  { href: "#cobertura", label: "Cobertura" },
+  { href: "#faq", label: "Preguntas" },
+];
+---
+
+<header class="sticky top-0 z-40 bg-brand-black border-b-4 border-brand-yellow">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8 py-2.5 flex items-center justify-between gap-4">
+    <a href="#inicio" class="shrink-0">
+      <img src="/images/logo.png" alt="RAINSTOP Impermeabilizaciones" class="h-14 sm:h-16 w-auto" />
+    </a>
+
+    <nav class="hidden md:flex items-center gap-7 text-sm font-semibold text-neutral-300">
+      {navLinks.map((link) => (
+        <a href={link.href} class="hover:text-brand-yellow transition-colors">
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <WhatsAppButton
+      message={WA_MESSAGES.heroPrimary}
+      label="Escribinos"
+      class="py-2! px-4! text-sm! shrink-0"
+    />
+  </div>
+</header>

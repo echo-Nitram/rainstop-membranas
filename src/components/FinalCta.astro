@@ -1,0 +1,25 @@
+---
+import WhatsAppButton from "./WhatsAppButton.astro";
+import { WA_MESSAGES } from "../consts";
+
+// Copy estacional: cambiar este título según la época del año (ver brief de CRO).
+// Otoño/invierno -> "Antes de que lleguen las lluvias, protegé tu techo."
+// Primavera/verano -> "Aprovechá el buen tiempo para renovar tu techo."
+const seasonalTitle = "Antes de que lleguen las lluvias, protegé tu techo";
+---
+
+<section class="relative overflow-hidden bg-brand-black text-brand-cream py-20 sm:py-28 text-center">
+  <svg class="pointer-events-none absolute -left-16 -bottom-16 w-[420px] opacity-[0.06]" viewBox="0 0 400 260" fill="none" stroke="currentColor" stroke-width="6" aria-hidden="true">
+    <path d="M20 180 L200 40 L380 180" />
+    <path d="M60 200 L200 90 L340 200" />
+  </svg>
+
+  <div class="relative mx-auto max-w-2xl px-5 sm:px-8">
+    <h2 class="text-3xl sm:text-4xl md:text-5xl mb-5">{seasonalTitle}</h2>
+    <p class="text-neutral-300 text-lg mb-9">
+      Agendá una visita sin costo y llevate tu techo listo para enfrentar la
+      lluvia, el sol y los cambios de temperatura — con garantía de 10 años.
+    </p>
+    <WhatsAppButton message={WA_MESSAGES.finalCta} label="Agendar visita sin costo" class="text-base px-8 py-4" />
+  </div>
+</section>

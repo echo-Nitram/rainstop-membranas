@@ -1,0 +1,28 @@
+---
+const items = [
+  { icon: "shield", text: "Garantía de 10 años" },
+  { icon: "box", text: "Materiales incluidos" },
+  { icon: "drop", text: "Resiste sol, lluvia y cambios de temperatura" },
+  { icon: "check", text: "Trabajo limpio y profesional" },
+];
+
+const paths: Record<string, string> = {
+  shield: "M12 3l7 3v6c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3z",
+  box: "M4 8l8-4 8 4-8 4-8-4zm0 0v8l8 4 8-4V8M4 8l8 4m0 0l8-4m-8 4v8",
+  drop: "M12 3s6 6.5 6 11a6 6 0 1 1-12 0c0-4.5 6-11 6-11z",
+  check: "M4 12l5 5 11-11",
+};
+---
+
+<section class="bg-brand-graphite text-brand-cream py-10">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8 grid grid-cols-2 md:grid-cols-4 gap-6">
+    {items.map((item) => (
+      <div class="flex flex-col items-center text-center gap-2">
+        <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="text-brand-yellow">
+          <path d={paths[item.icon]}></path>
+        </svg>
+        <p class="text-xs sm:text-sm font-semibold text-neutral-300 leading-snug">{item.text}</p>
+      </div>
+    ))}
+  </div>
+</section>

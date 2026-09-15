@@ -1,0 +1,45 @@
+---
+const steps = [
+  {
+    n: "01",
+    title: "Diagnóstico",
+    text: "Vemos tu techo (en persona o con fotos por WhatsApp) y te damos un presupuesto sin costo.",
+  },
+  {
+    n: "02",
+    title: "Preparación de la superficie",
+    text: "Limpieza y tratamiento del techo para que la membrana quede perfectamente adherida.",
+  },
+  {
+    n: "03",
+    title: "Colocación de la membrana",
+    text: "Aplicamos la membrana asfáltica elegida según el estado y el uso de tu techo.",
+  },
+  {
+    n: "04",
+    title: "Terminación y garantía",
+    text: "Terminación profesional en aluminio y garantía de 10 años por escrito.",
+  },
+];
+---
+
+<section class="bg-white py-16 sm:py-20">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8">
+    <p class="text-xs font-bold tracking-widest uppercase text-brand-yellow mb-2">Proceso</p>
+    <h2 class="text-3xl sm:text-4xl max-w-xl mb-12">
+      Cómo trabajamos: de la visita al techo terminado
+    </h2>
+
+    <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-8">
+      {steps.map((s, i) => (
+        <div class="relative pl-1">
+          <span class="font-display text-5xl text-brand-yellow-bg block mb-2" style="-webkit-text-stroke: 1.5px #ffc400;">
+            {s.n}
+          </span>
+          <h3 class="text-lg font-bold mb-1.5 font-sans">{s.title}</h3>
+          <p class="text-sm text-neutral-600">{s.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,29 @@
+---
+import { waLink } from "../consts";
+
+interface Props {
+  message: string;
+  label: string;
+  variant?: "primary" | "outline" | "outline-dark";
+  class?: string;
+}
+
+const { message, label, variant = "primary", class: className = "" } = Astro.props;
+const href = waLink(message);
+
+const variantClass =
+  variant === "outline" ? "btn-outline" : variant === "outline-dark" ? "btn-outline-dark" : "btn-primary";
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  class={`btn ${variantClass} ${className}`}
+  data-wa-cta={label}
+>
+  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H12l-5 1 1-5v-.35A8.5 8.5 0 1 1 21 11.5Z"></path>
+  </svg>
+  <span>{label}</span>
+</a>

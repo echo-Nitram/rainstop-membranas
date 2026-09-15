@@ -1,0 +1,33 @@
+---
+import { SITE_NAME, PHONE_DISPLAY, TEL_LINK, INSTAGRAM_URL, INSTAGRAM_HANDLE, waLink, WA_MESSAGES } from "../consts";
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-brand-graphite text-neutral-400 py-12">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8 grid sm:grid-cols-3 gap-8">
+    <div>
+      <img src="/images/logo.png" alt={SITE_NAME} class="h-20 w-auto mb-3" />
+      <p class="text-sm max-w-xs">
+        Impermeabilización de techos con membrana asfáltica. Tu techo en buenas manos.
+      </p>
+    </div>
+
+    <div class="text-sm space-y-2">
+      <p class="text-neutral-200 font-bold mb-1">Contacto</p>
+      <p><a href={waLink(WA_MESSAGES.floating)} target="_blank" rel="noopener noreferrer" class="hover:text-brand-yellow">WhatsApp: {PHONE_DISPLAY}</a></p>
+      <p><a href={TEL_LINK} class="hover:text-brand-yellow">Llamar: {PHONE_DISPLAY}</a></p>
+      <p><a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" class="hover:text-brand-yellow">Instagram: {INSTAGRAM_HANDLE}</a></p>
+    </div>
+
+    <div class="text-sm space-y-2">
+      <p class="text-neutral-200 font-bold mb-1">Horario de atención</p>
+      <!-- TODO: confirmar horario real con el cliente -->
+      <p>Lunes a sábado — a confirmar</p>
+      <p class="pt-2 text-neutral-500">Montevideo y área metropolitana</p>
+    </div>
+  </div>
+
+  <div class="mx-auto max-w-6xl px-5 sm:px-8 mt-10 pt-6 border-t border-neutral-800 text-xs text-neutral-500">
+    © {year} {SITE_NAME}. Todos los derechos reservados.
+  </div>
+</footer>

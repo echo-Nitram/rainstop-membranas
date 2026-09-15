@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-black: #141310;
+  --color-brand-graphite: #1f1e1a;
+  --color-brand-graphite-2: #262520;
+  --color-brand-cream: #faf9f5;
+  --color-brand-cream-alt: #f1efe6;
+  --color-brand-yellow: #ffc400;
+  --color-brand-yellow-bg: #fff3d6;
+  --color-brand-blue: #1d4ed8;
+
+  --font-display: "Anton", system-ui, sans-serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-script: "Caveat", cursive;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 84px;
+}
+
+body {
+  background: var(--color-brand-cream);
+  color: var(--color-brand-black);
+  font-family: var(--font-sans);
+}
+
+h1, h2, h3, .font-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  line-height: 1.05;
+}
+
+/* ---------- botones WhatsApp / CTA ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 800;
+  font-size: 0.95rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: 999px;
+  transition: transform 0.15s ease, filter 0.15s ease;
+  white-space: nowrap;
+}
+.btn:hover { transform: translateY(-1px); filter: brightness(1.06); }
+.btn:active { transform: translateY(0); }
+
+.btn-primary {
+  background: var(--color-brand-yellow);
+  color: var(--color-brand-black);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid currentColor;
+}
+
+.btn-outline-dark {
+  background: transparent;
+  border: 2px solid var(--color-brand-black);
+  color: var(--color-brand-black);
+}
+
+/* ---------- carrusel antes/después (scroll-snap nativo, sin JS) ---------- */
+.snap-row {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 0.75rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-brand-yellow) transparent;
+}
+.snap-row > * {
+  scroll-snap-align: start;
+  flex: 0 0 auto;
+}
+
+/* ---------- acordeón FAQ (details/summary nativo, sin JS) ---------- */
+details.faq summary {
+  cursor: pointer;
+  list-style: none;
+}
+details.faq summary::-webkit-details-marker { display: none; }
+details.faq .chev { transition: transform 0.2s ease; }
+details.faq[open] .chev { transform: rotate(180deg); }
+
+/* ---------- boton flotante WhatsApp ---------- */
+@keyframes wa-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 196, 0, 0.55); }
+  50% { box-shadow: 0 0 0 10px rgba(255, 196, 0, 0); }
+}
+.wa-float {
+  animation: wa-pulse 2.6s ease-out infinite;
+}

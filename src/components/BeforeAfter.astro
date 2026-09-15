@@ -1,0 +1,36 @@
+---
+import WhatsAppButton from "./WhatsAppButton.astro";
+import { WA_MESSAGES } from "../consts";
+
+// TODO: reemplazar estos 4 placeholders por fotos reales antes/después
+// (mismo ángulo, mismo techo). Ver "Pendientes" en el brief del proyecto.
+const placeholders = [1, 2, 3, 4];
+---
+
+<section id="trabajos" class="bg-brand-cream-alt py-16 sm:py-20">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8">
+    <p class="text-xs font-bold tracking-widest uppercase text-brand-yellow mb-2">Trabajos realizados</p>
+    <h2 class="text-3xl sm:text-4xl max-w-xl mb-4">Antes y después</h2>
+    <p class="text-neutral-600 max-w-2xl mb-10">
+      Esta sección se completa con fotos reales de cada trabajo, mismo ángulo
+      antes y después. Por ahora dejamos el espacio listo para cargarlas.
+    </p>
+
+    <div class="snap-row">
+      {placeholders.map((i) => (
+        <div class="w-[280px] sm:w-[340px] rounded-2xl border-2 border-dashed border-neutral-300 bg-white/60 p-6 flex flex-col items-center justify-center text-center gap-3 aspect-[4/3]">
+          <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" class="text-neutral-400">
+            <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+            <circle cx="8.5" cy="10" r="1.5"></circle>
+            <path d="M21 16l-5-4-4 3-3-2-6 4"></path>
+          </svg>
+          <p class="text-sm font-semibold text-neutral-400">Foto de trabajo {i} — próximamente</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-10">
+      <WhatsAppButton message={WA_MESSAGES.instagram} label="Quiero un techo así" variant="outline-dark" />
+    </div>
+  </div>
+</section>

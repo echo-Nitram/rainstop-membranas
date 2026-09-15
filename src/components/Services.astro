@@ -1,0 +1,35 @@
+---
+import WhatsAppButton from "./WhatsAppButton.astro";
+import { SERVICES } from "../consts";
+---
+
+<section id="servicios" class="bg-brand-black text-brand-cream py-16 sm:py-20">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8">
+    <p class="text-xs font-bold tracking-widest uppercase text-brand-yellow mb-2">Nuestros servicios</p>
+    <h2 class="text-3xl sm:text-4xl max-w-xl mb-4">
+      Servicios de impermeabilización con membrana asfáltica
+    </h2>
+    <p class="text-neutral-400 max-w-2xl mb-12">
+      Trabajamos con las tres membranas asfálticas más usadas en Uruguay. Si no
+      sabés cuál necesitás, contanos el problema y te recomendamos la mejor opción.
+    </p>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      {SERVICES.map((s) => (
+        <div class="flex flex-col rounded-2xl border border-neutral-800 bg-brand-graphite p-6">
+          <span class="text-xs font-bold uppercase tracking-wide text-brand-yellow mb-2">{s.tagline}</span>
+          <h3 class="text-2xl mb-3">{s.name}</h3>
+          <p class="text-neutral-400 text-sm mb-4 grow">{s.description}</p>
+          <ul class="mb-6 space-y-1.5">
+            {s.bullets.map((b) => (
+              <li class="text-sm text-neutral-300 flex gap-2">
+                <span class="text-brand-yellow">✓</span>{b}
+              </li>
+            ))}
+          </ul>
+          <WhatsAppButton message={s.waMessage} label={`Consultar por ${s.name}`} class="w-full" />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
