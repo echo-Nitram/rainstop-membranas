@@ -107,7 +107,6 @@ export const GALLERY_IMAGES: { src: string; alt: string }[] = [
   { src: "/images/gallery/gallery-3.webp", alt: "Terraza impermeabilizada con membrana asfáltica de terminación azul" },
   { src: "/images/gallery/gallery-4.webp", alt: "Techo con membrana geotextil recién colocada, terminación prolija" },
   { src: "/images/gallery/gallery-5.webp", alt: "Techo industrial de gran escala impermeabilizado con membrana aluminizada" },
-  { src: "/images/gallery/gallery-6.webp", alt: "Técnico de RAINSTOP terminando la impermeabilización de un techo" },
 ];
 
 export const FAQ_ITEMS: { q: string; a: string }[] = [
