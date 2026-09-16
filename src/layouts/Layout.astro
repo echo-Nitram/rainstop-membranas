@@ -104,5 +104,112 @@ const jsonLd = {
         document.querySelectorAll("[data-reveal]").forEach((el) => el.classList.add("is-visible"));
       }
     </script>
+
+    <script>
+      // Tilt 3D + brillo en tarjetas (.tilt-card / .shine-card), contador
+      // animado (data-counter) y parallax suave (data-parallax).
+      // Todo se desactiva solo con prefers-reduced-motion o sin soporte hover (táctil).
+      try {
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const canHover = window.matchMedia("(hover: hover)").matches;
+
+        // --- Tilt + brillo ---
+        if (!reducedMotion && canHover) {
+          const tiltEls = document.querySelectorAll(".tilt-card, .shine-card");
+          tiltEls.forEach((el) => {
+            const isTilt = el.classList.contains("tilt-card");
+            el.addEventListener("pointerenter", () => el.classList.add("is-hovering"));
+            el.addEventListener("pointerleave", () => {
+              el.classList.remove("is-hovering");
+              el.style.setProperty("--tilt-x", "0deg");
+              el.style.setProperty("--tilt-y", "0deg");
+            });
+            el.addEventListener("pointermove", (e) => {
+              const rect = el.getBoundingClientRect();
+              const px = (e.clientX - rect.left) / rect.width;
+              const py = (e.clientY - rect.top) / rect.height;
+              el.style.setProperty("--mx", `${px * 100}%`);
+              el.style.setProperty("--my", `${py * 100}%`);
+              if (isTilt) {
+                const maxTilt = 7;
+                el.style.setProperty("--tilt-x", `${(0.5 - py) * maxTilt * 2}deg`);
+                el.style.setProperty("--tilt-y", `${(px - 0.5) * maxTilt * 2}deg`);
+              }
+            });
+          });
+        }
+
+        // --- Contador animado ---
+        const counters = document.querySelectorAll("[data-counter]");
+        if (counters.length) {
+          const animateCounter = (el) => {
+            const target = parseFloat(el.getAttribute("data-counter") || "0");
+            const duration = 1100;
+            const start = performance.now();
+            const suffix = el.getAttribute("data-counter-suffix") || "";
+            const step = (now) => {
+              const t = Math.min(1, (now - start) / duration);
+              const eased = 1 - Math.pow(1 - t, 3);
+              el.textContent = Math.round(target * eased) + suffix;
+              if (t < 1) {
+                requestAnimationFrame(step);
+              } else {
+                el.textContent = target + suffix;
+                el.classList.add("counter-done");
+              }
+            };
+            requestAnimationFrame(step);
+          };
+
+          if (!reducedMotion && "IntersectionObserver" in window) {
+            const counterObserver = new IntersectionObserver(
+              (entries) => {
+                for (const entry of entries) {
+                  if (entry.isIntersecting) {
+                    animateCounter(entry.target);
+                    counterObserver.unobserve(entry.target);
+                  }
+                }
+              },
+              { threshold: 0.6 }
+            );
+            counters.forEach((el) => counterObserver.observe(el));
+          } else {
+            counters.forEach((el) => {
+              el.textContent = (el.getAttribute("data-counter") || "0") + (el.getAttribute("data-counter-suffix") || "");
+            });
+          }
+        }
+
+        // --- Parallax suave en elementos decorativos ---
+        const parallaxEls = Array.from(document.querySelectorAll("[data-parallax]"));
+        if (!reducedMotion && parallaxEls.length) {
+          let ticking = false;
+          const updateParallax = () => {
+            const viewportH = window.innerHeight;
+            parallaxEls.forEach((el) => {
+              const factor = parseFloat(el.getAttribute("data-parallax") || "0.1");
+              const rect = el.getBoundingClientRect();
+              const centerOffset = rect.top + rect.height / 2 - viewportH / 2;
+              el.style.transform = `translateY(${(-centerOffset * factor).toFixed(1)}px)`;
+            });
+            ticking = false;
+          };
+          window.addEventListener(
+            "scroll",
+            () => {
+              if (!ticking) {
+                requestAnimationFrame(updateParallax);
+                ticking = true;
+              }
+            },
+            { passive: true }
+          );
+          updateParallax();
+        }
+      } catch {
+        // Si algo falla, el sitio sigue funcionando sin estos extras.
+      }
+    </script>
   </body>
 </html>

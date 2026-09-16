@@ -1,6 +1,6 @@
 ---
 const items = [
-  { icon: "shield", text: "Garantía de 10 años" },
+  { icon: "shield", text: "años de garantía", counter: 10 },
   { icon: "box", text: "Materiales incluidos" },
   { icon: "drop", text: "Resiste sol, lluvia y cambios de temperatura" },
   { icon: "check", text: "Trabajo limpio y profesional" },
@@ -17,11 +17,18 @@ const paths: Record<string, string> = {
 <section class="bg-brand-graphite text-brand-cream py-10">
   <div class="mx-auto max-w-6xl px-5 sm:px-8 grid grid-cols-2 md:grid-cols-4 gap-6">
     {items.map((item, i) => (
-      <div class="flex flex-col items-center text-center gap-2" data-reveal style={`transition-delay: ${i * 80}ms`}>
+      <div class="tilt-card flex flex-col items-center text-center gap-2 rounded-xl px-3 py-2" data-reveal style={`transition-delay: ${i * 80}ms`}>
         <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="text-brand-yellow">
           <path d={paths[item.icon]}></path>
         </svg>
-        <p class="text-xs sm:text-sm font-semibold text-neutral-300 leading-snug">{item.text}</p>
+        {item.counter ? (
+          <p class="text-xs sm:text-sm font-semibold text-neutral-300 leading-snug">
+            <span class="font-display text-2xl sm:text-3xl text-brand-yellow" data-counter={item.counter}>0</span>
+            {" "}{item.text}
+          </p>
+        ) : (
+          <p class="text-xs sm:text-sm font-semibold text-neutral-300 leading-snug">{item.text}</p>
+        )}
       </div>
     ))}
   </div>

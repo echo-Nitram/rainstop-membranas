@@ -102,10 +102,13 @@ details.faq[open] .chev { transform: rotate(180deg); }
 /* ---------- animación al hacer scroll (data-reveal + IntersectionObserver) ---------- */
 [data-reveal] {
   opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(26px);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
+[data-reveal="left"] { transform: translateX(-34px); }
+[data-reveal="right"] { transform: translateX(34px); }
+[data-reveal="scale"] { transform: scale(0.92) translateY(14px); }
 [data-reveal].is-visible {
   opacity: 1;
   transform: none;
@@ -137,6 +140,92 @@ details.faq[open] .chev { transform: rotate(180deg); }
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-in { animation: none; }
+}
+
+/* ---------- tarjetas con tilt 3D + brillo que sigue el cursor ---------- */
+.tilt-card {
+  position: relative;
+  transform: perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateZ(0);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+  will-change: transform;
+  overflow: hidden;
+  isolation: isolate;
+}
+.tilt-card.is-hovering {
+  transition: transform 0.08s linear, box-shadow 0.35s ease;
+  box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.28);
+}
+.tilt-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: radial-gradient(
+    280px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(255, 196, 0, 0.16),
+    transparent 60%
+  );
+}
+.tilt-card.is-hovering::after {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce), (hover: none) {
+  .tilt-card {
+    transform: none !important;
+    transition: box-shadow 0.3s ease;
+  }
+  .tilt-card::after {
+    display: none;
+  }
+}
+
+/* ---------- brillo suave (sin tilt) para tiles de imagen ---------- */
+.shine-card {
+  position: relative;
+  isolation: isolate;
+}
+.shine-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.22), transparent 60%);
+}
+.shine-card:hover::after {
+  opacity: 1;
+}
+@media (hover: none) {
+  .shine-card::after { display: none; }
+}
+
+/* ---------- contador animado (data-counter) ---------- */
+[data-counter] {
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+}
+@keyframes counter-pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+[data-counter].counter-done {
+  animation: counter-pop 0.4s ease;
+}
+
+/* ---------- parallax suave en elementos decorativos de fondo ---------- */
+[data-parallax] {
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-parallax] {
+    transform: none !important;
+  }
 }
 
 

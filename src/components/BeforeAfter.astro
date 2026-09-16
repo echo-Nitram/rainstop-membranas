@@ -15,8 +15,8 @@ import { WA_MESSAGES, WORK_SAMPLES } from "../consts";
     <div class="snap-row">
       {WORK_SAMPLES.map((job, i) => (
         <div
-          class="w-[300px] sm:w-[420px] shrink-0 rounded-2xl overflow-hidden border border-neutral-200 bg-white shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
-          data-reveal
+          class="tilt-card w-[300px] sm:w-[420px] shrink-0 rounded-2xl overflow-hidden border border-neutral-200 bg-white shadow-sm"
+          data-reveal={i % 2 === 0 ? "up" : "scale"}
           style={`transition-delay: ${i * 90}ms`}
         >
           <div class="grid grid-cols-2 gap-px bg-neutral-200">
