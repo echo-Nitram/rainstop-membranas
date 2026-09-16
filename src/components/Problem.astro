@@ -12,7 +12,7 @@ const consequences = [
 
 <section class="bg-brand-cream py-16 sm:py-20">
   <div class="mx-auto max-w-6xl px-5 sm:px-8 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-    <div>
+    <div data-reveal>
       <p class="text-xs font-bold tracking-widest uppercase text-brand-yellow mb-2">
         No esperes a la próxima lluvia
       </p>
@@ -31,8 +31,8 @@ const consequences = [
     </div>
 
     <ul class="grid gap-4">
-      {consequences.map((c) => (
-        <li class="flex items-start gap-3 bg-white border border-neutral-200 rounded-2xl p-4">
+      {consequences.map((c, i) => (
+        <li class="card-hover flex items-start gap-3 bg-white border border-neutral-200 rounded-2xl p-4" data-reveal style={`transition-delay: ${i * 80}ms`}>
           <span class="mt-0.5 shrink-0 flex h-7 w-7 items-center justify-center rounded-full bg-brand-yellow-bg text-brand-yellow font-bold">
             !
           </span>

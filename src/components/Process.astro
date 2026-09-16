@@ -32,7 +32,7 @@ const steps = [
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
       {steps.map((s, i) => (
-        <div class="relative pl-1">
+        <div class="relative pl-1" data-reveal style={`transition-delay: ${i * 100}ms`}>
           <span class="font-display text-5xl text-brand-yellow-bg block mb-2" style="-webkit-text-stroke: 1.5px #ffc400;">
             {s.n}
           </span>

@@ -15,11 +15,13 @@ const seasonalTitle = "Antes de que lleguen las lluvias, protegé tu techo";
   </svg>
 
   <div class="relative mx-auto max-w-2xl px-5 sm:px-8">
-    <h2 class="text-3xl sm:text-4xl md:text-5xl mb-5">{seasonalTitle}</h2>
-    <p class="text-neutral-300 text-lg mb-9">
+    <h2 class="text-3xl sm:text-4xl md:text-5xl mb-5" data-reveal>{seasonalTitle}</h2>
+    <p class="text-neutral-300 text-lg mb-9" data-reveal style="transition-delay: 90ms">
       Agendá una visita sin costo y llevate tu techo listo para enfrentar la
       lluvia, el sol y los cambios de temperatura — con garantía de 10 años.
     </p>
-    <WhatsAppButton message={WA_MESSAGES.finalCta} label="Agendar visita sin costo" class="text-base px-8 py-4" />
+    <div data-reveal style="transition-delay: 180ms">
+      <WhatsAppButton message={WA_MESSAGES.finalCta} label="Agendar visita sin costo" class="text-base px-8 py-4" />
+    </div>
   </div>
 </section>

@@ -86,6 +86,30 @@ export const SERVICES: {
   },
 ];
 
+// Pares reales antes/después (mismo techo, dos etapas del trabajo).
+export const WORK_SAMPLES: { title: string; before: string; after: string }[] = [
+  {
+    title: "Techo de fibrocemento — Membrana Aluminizada",
+    before: "/images/trabajos/trabajo1-antes.webp",
+    after: "/images/trabajos/trabajo1-despues.webp",
+  },
+  {
+    title: "Techo de fibrocemento — Membrana Aluminizada",
+    before: "/images/trabajos/trabajo2-antes.webp",
+    after: "/images/trabajos/trabajo2-despues.webp",
+  },
+];
+
+// Fotos reales para la sección de Instagram / galería de trabajos.
+export const GALLERY_IMAGES: { src: string; alt: string }[] = [
+  { src: "/images/gallery/gallery-hero.webp", alt: "Técnico de RAINSTOP trabajando sobre un techo recién impermeabilizado" },
+  { src: "/images/gallery/gallery-2.webp", alt: "Técnico de RAINSTOP aplicando terminación en el borde de un techo de chapa" },
+  { src: "/images/gallery/gallery-3.webp", alt: "Terraza impermeabilizada con membrana asfáltica de terminación azul" },
+  { src: "/images/gallery/gallery-4.webp", alt: "Techo con membrana geotextil recién colocada, terminación prolija" },
+  { src: "/images/gallery/gallery-5.webp", alt: "Techo industrial de gran escala impermeabilizado con membrana aluminizada" },
+  { src: "/images/gallery/gallery-6.webp", alt: "Técnico de RAINSTOP terminando la impermeabilización de un techo" },
+];
+
 export const FAQ_ITEMS: { q: string; a: string }[] = [
   {
     q: "¿Cuánto cuesta impermeabilizar un techo por m²?",
@@ -97,7 +121,7 @@ export const FAQ_ITEMS: { q: string; a: string }[] = [
   },
   {
     q: "¿Cuánto tarda el trabajo?",
-    a: "La mayoría de los techos residenciales se resuelven en 1 a 2 días, dependiendo de la superficie y las condiciones climáticas.",
+    a: "La mayoría de los techos residenciales se resuelven en 1 a 3 días, dependiendo de la superficie y las condiciones climáticas.",
   },
   {
     q: "¿Qué incluye el presupuesto?",

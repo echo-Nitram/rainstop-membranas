@@ -1,15 +1,14 @@
 ---
-import { INSTAGRAM_URL, INSTAGRAM_HANDLE } from "../consts";
+import { INSTAGRAM_URL, INSTAGRAM_HANDLE, GALLERY_IMAGES } from "../consts";
 
-// TODO: sumar más capturas reales de posteos acá a medida que se publiquen.
-const placeholders = [1, 2, 3, 4, 5];
+const [hero, ...rest] = GALLERY_IMAGES;
 ---
 
 <section class="bg-brand-black text-brand-cream py-16 sm:py-20">
   <div class="mx-auto max-w-6xl px-5 sm:px-8">
-    <p class="text-xs font-bold tracking-widest uppercase text-brand-yellow mb-2">Redes sociales</p>
-    <h2 class="text-3xl sm:text-4xl mb-4">Seguinos en Instagram</h2>
-    <p class="text-neutral-400 max-w-2xl mb-10">
+    <p class="text-xs font-bold tracking-widest uppercase text-brand-yellow mb-2" data-reveal>Redes sociales</p>
+    <h2 class="text-3xl sm:text-4xl mb-4" data-reveal>Seguinos en Instagram</h2>
+    <p class="text-neutral-400 max-w-2xl mb-10" data-reveal>
       Mostramos trabajos, tips y promociones estacionales en {INSTAGRAM_HANDLE}.
     </p>
 
@@ -18,29 +17,32 @@ const placeholders = [1, 2, 3, 4, 5];
         href={INSTAGRAM_URL}
         target="_blank"
         rel="noopener noreferrer"
-        class="col-span-2 row-span-2 sm:row-span-1 aspect-square rounded-xl overflow-hidden border border-neutral-800"
+        class="col-span-2 row-span-2 sm:row-span-1 aspect-square rounded-xl overflow-hidden border border-neutral-800 group hover:border-brand-yellow/60 transition-colors duration-300"
+        data-reveal
       >
         <img
-          src="/images/post-ejemplo-instagram.webp"
-          alt="Publicación de Instagram de RAINSTOP: técnico aplicando membrana asfáltica en un techo"
-          class="h-full w-full object-cover"
+          src={hero.src}
+          alt={hero.alt}
+          class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
           loading="lazy"
         />
       </a>
 
-      {placeholders.map((i) => (
+      {rest.map((img, i) => (
         <a
           href={INSTAGRAM_URL}
           target="_blank"
           rel="noopener noreferrer"
-          class="aspect-square rounded-xl border border-neutral-800 bg-brand-graphite flex items-center justify-center text-neutral-600 hover:text-brand-yellow transition-colors"
-          aria-label="Ver más en Instagram"
+          class="aspect-square rounded-xl overflow-hidden border border-neutral-800 group hover:border-brand-yellow/60 transition-colors duration-300"
+          data-reveal
+          style={`transition-delay: ${i * 60}ms`}
         >
-          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7">
-            <rect x="3" y="3" width="18" height="18" rx="5"></rect>
-            <circle cx="12" cy="12" r="4"></circle>
-            <circle cx="17" cy="7" r="1"></circle>
-          </svg>
+          <img
+            src={img.src}
+            alt={img.alt}
+            class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+            loading="lazy"
+          />
         </a>
       ))}
     </div>

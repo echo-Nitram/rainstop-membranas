@@ -15,8 +15,8 @@ import { SERVICES } from "../consts";
     </p>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {SERVICES.map((s) => (
-        <div class="flex flex-col rounded-2xl border border-neutral-800 bg-brand-graphite p-6">
+      {SERVICES.map((s, i) => (
+        <div class="card-hover flex flex-col rounded-2xl border border-neutral-800 bg-brand-graphite p-6" data-reveal style={`transition-delay: ${i * 100}ms`}>
           <span class="text-xs font-bold uppercase tracking-wide text-brand-yellow mb-2">{s.tagline}</span>
           <h3 class="text-2xl mb-3">{s.name}</h3>
           <p class="text-neutral-400 text-sm mb-4 grow">{s.description}</p>

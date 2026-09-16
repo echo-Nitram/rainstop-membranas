@@ -12,7 +12,7 @@ interface Props {
 
 const { title, description = SITE_DESCRIPTION } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, SITE_URL);
-const ogImage = new URL("/images/post-ejemplo-instagram.webp", SITE_URL);
+const ogImage = new URL("/images/gallery/gallery-hero.webp", SITE_URL);
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -57,6 +57,10 @@ const jsonLd = {
 
     <link rel="icon" type="image/png" href="/images/favicon.png" />
 
+    <noscript>
+      <style>[data-reveal] { opacity: 1 !important; transform: none !important; }</style>
+    </noscript>
+
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
@@ -66,5 +70,39 @@ const jsonLd = {
     </main>
     <Footer />
     <WhatsAppFloat />
+
+    <script>
+      // Revela con fade + slide los elementos marcados con data-reveal
+      // a medida que entran en el viewport (una sola vez, sin re-animar).
+      try {
+        const revealEls = document.querySelectorAll("[data-reveal]");
+
+        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObserver" in window) {
+          const observer = new IntersectionObserver(
+            (entries) => {
+              for (const entry of entries) {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add("is-visible");
+                  observer.unobserve(entry.target);
+                }
+              }
+            },
+            { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
+          );
+          revealEls.forEach((el) => observer.observe(el));
+
+          // Red de seguridad: si por lo que sea algo queda sin revelarse
+          // (viewport raro, error puntual), no se pierde contenido para siempre.
+          setTimeout(() => {
+            revealEls.forEach((el) => el.classList.add("is-visible"));
+          }, 4000);
+        } else {
+          // Sin soporte o el usuario prefiere menos movimiento: mostrar directo.
+          revealEls.forEach((el) => el.classList.add("is-visible"));
+        }
+      } catch {
+        document.querySelectorAll("[data-reveal]").forEach((el) => el.classList.add("is-visible"));
+      }
+    </script>
   </body>
 </html>

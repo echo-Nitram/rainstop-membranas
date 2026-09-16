@@ -16,8 +16,8 @@ const paths: Record<string, string> = {
 
 <section class="bg-brand-graphite text-brand-cream py-10">
   <div class="mx-auto max-w-6xl px-5 sm:px-8 grid grid-cols-2 md:grid-cols-4 gap-6">
-    {items.map((item) => (
-      <div class="flex flex-col items-center text-center gap-2">
+    {items.map((item, i) => (
+      <div class="flex flex-col items-center text-center gap-2" data-reveal style={`transition-delay: ${i * 80}ms`}>
         <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="text-brand-yellow">
           <path d={paths[item.icon]}></path>
         </svg>
