@@ -1,0 +1,57 @@
+---
+import { TESTIMONIALS, INSTAGRAM_URL } from "../consts";
+// Si todavía no hay testimonios reales cargados en consts.ts, esta sección
+// no se renderiza (ningún riesgo de publicar prueba social inventada).
+---
+
+{TESTIMONIALS.length > 0 && (
+  <section id="testimonios" class="bg-brand-cream py-16 sm:py-20">
+    <div class="mx-auto max-w-6xl px-5 sm:px-8">
+      <p class="text-xs font-bold tracking-widest uppercase text-brand-yellow mb-2 text-center" data-reveal>
+        Lo que dicen nuestros clientes
+      </p>
+      <h2 class="text-3xl sm:text-4xl mb-12 text-center" data-reveal>
+        Reseñas de techos ya impermeabilizados
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {TESTIMONIALS.map((t, i) => (
+          <div
+            class="tilt-card flex flex-col rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm"
+            data-reveal="scale"
+            style={`transition-delay: ${i * 100}ms`}
+          >
+            <div class="flex gap-0.5 mb-4" aria-label={`${t.rating} de 5 estrellas`}>
+              {Array.from({ length: 5 }).map((_, star) => (
+                <svg
+                  viewBox="0 0 20 20"
+                  width="18"
+                  height="18"
+                  fill={star < t.rating ? "#ffc400" : "none"}
+                  stroke="#ffc400"
+                  stroke-width="1.5"
+                  aria-hidden="true"
+                >
+                  <path d="M10 1.5l2.6 5.4 5.9.7-4.3 4.2 1 5.9L10 14.8l-5.2 2.9 1-5.9-4.3-4.2 5.9-.7L10 1.5z" />
+                </svg>
+              ))}
+            </div>
+            <p class="font-script text-2xl leading-snug text-neutral-800 mb-5 grow">
+              “{t.quote}”
+            </p>
+            <div>
+              <p class="font-bold text-neutral-900">{t.name}</p>
+              <p class="text-sm text-neutral-500">{t.location}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-10 text-center" data-reveal>
+        <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" class="btn btn-outline-dark">
+          Ver más trabajos en Instagram →
+        </a>
+      </div>
+    </div>
+  </section>
+)}

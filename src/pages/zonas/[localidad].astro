@@ -1,0 +1,50 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Hero from "../../components/Hero.astro";
+import TrustBar from "../../components/TrustBar.astro";
+import Problem from "../../components/Problem.astro";
+import Services from "../../components/Services.astro";
+import Calculator from "../../components/Calculator.astro";
+import Process from "../../components/Process.astro";
+import BeforeAfter from "../../components/BeforeAfter.astro";
+import Testimonials from "../../components/Testimonials.astro";
+import Coverage from "../../components/Coverage.astro";
+import FAQ from "../../components/FAQ.astro";
+import FinalCta from "../../components/FinalCta.astro";
+import { COVERAGE_AREAS, SITE_NAME } from "../../consts";
+
+export function getStaticPaths() {
+  return COVERAGE_AREAS.map((area) => ({
+    params: { localidad: area.slug },
+    props: { area },
+  }));
+}
+
+const { area } = Astro.props;
+
+const title = `Impermeabilización de Techos en ${area.name} | ${SITE_NAME}`;
+const description = `Impermeabilizamos techos con membrana asfáltica en ${area.name}: geotextil, mineralizada o aluminizada. Materiales, mano de obra y garantía de 10 años. Presupuesto sin costo por WhatsApp.`;
+const heroWaMessage = `Hola! Vi la web de RAINSTOP y quiero pedir un presupuesto sin costo para mi techo en ${area.name}.`;
+---
+
+<Layout title={title} description={description}>
+  <Hero
+    badge={`☔ Impermeabilizaciones a domicilio en ${area.name}`}
+    title={`Impermeabilización de techos con membrana asfáltica en ${area.name}`}
+    waMessage={heroWaMessage}
+  />
+  <TrustBar />
+  <Problem />
+  <Services />
+  <Calculator />
+  <Process />
+  <BeforeAfter />
+  <Testimonials />
+  <Coverage />
+  <FAQ />
+  <FinalCta />
+
+  <p class="bg-brand-black text-center text-xs text-neutral-500 pb-8">
+    <a href="/" class="hover:text-brand-yellow underline underline-offset-2">← Volver a la página principal de RAINSTOP</a>
+  </p>
+</Layout>

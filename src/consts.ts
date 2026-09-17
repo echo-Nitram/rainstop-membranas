@@ -6,13 +6,23 @@ export const SITE_DESCRIPTION =
   "Impermeabilizamos tu techo con membrana asfáltica: geotextil, mineralizada o aluminizada. Materiales, mano de obra y garantía de 10 años. Presupuesto sin costo por WhatsApp.";
 
 // TODO confirmar con el cliente: zona de cobertura real
-export const COVERAGE_AREAS = [
-  "Montevideo",
-  "Canelones",
-  "Ciudad de la Costa",
-  "Las Piedras",
-  "Pando",
+export const COVERAGE_AREAS: { name: string; slug: string }[] = [
+  { name: "Montevideo", slug: "montevideo" },
+  { name: "Canelones", slug: "canelones" },
+  { name: "Ciudad de la Costa", slug: "ciudad-de-la-costa" },
+  { name: "Las Piedras", slug: "las-piedras" },
+  { name: "Pando", slug: "pando" },
 ];
+
+// Precio de referencia usado en el FAQ y en la calculadora de presupuesto —
+// mantener este número sincronizado con lo que dice FAQ_ITEMS más abajo.
+export const PRICE_PER_M2 = 550;
+
+// --- Tracking / medición (ver brief de Analytics) ---
+// Dejar vacío = esa sección de tracking no se inyecta (no rompe nada).
+// Pegar el ID real cuando el cliente lo pase y listo, no hace falta tocar nada más.
+export const META_PIXEL_ID = ""; // TODO: Pixel ID de Meta Business Manager (ej: "1234567890123456")
+export const GTM_ID = ""; // TODO: Container ID de Google Tag Manager (formato "GTM-XXXXXXX")
 
 export const INSTAGRAM_URL = "https://www.instagram.com/rainstop_membranas/";
 export const INSTAGRAM_HANDLE = "@rainstop_membranas";
@@ -135,4 +145,23 @@ export const FAQ_ITEMS: { q: string; a: string }[] = [
     q: "¿Trabajan en toda la zona metropolitana?",
     a: "Sí, cubrimos Montevideo y localidades cercanas. Escribinos tu zona por WhatsApp y te confirmamos al instante.",
   },
+];
+
+// Testimonios reales de clientes (ver brief de Prueba Social).
+// IMPORTANTE: no cargar reseñas inventadas acá — la sección de Testimonials
+// no se renderiza si este array está vacío (ver Testimonials.astro).
+// Para cada uno pedirle al cliente: nombre, barrio/zona, cita textual corta,
+// y puntaje 1-5 (si tiene la reseña en Google, copiar esa misma).
+export const TESTIMONIALS: {
+  name: string;
+  location: string;
+  quote: string;
+  rating: number;
+}[] = [
+  // {
+  //   name: "Nombre Apellido",
+  //   location: "Malvín, Montevideo",
+  //   quote: "Cita textual corta del cliente, tal cual la dijo o la escribió.",
+  //   rating: 5,
+  // },
 ];
