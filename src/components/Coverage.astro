@@ -2,21 +2,19 @@
 import WhatsAppButton from "./WhatsAppButton.astro";
 import { WA_MESSAGES, COVERAGE_AREAS } from "../consts";
 
-// Posiciones del gráfico ilustrativo (no es un mapa geográficamente exacto,
-// es un esquema de red con Montevideo como base y las zonas alrededor,
-// ubicadas en la dirección aproximada real). Si se agrega o saca una zona en
-// COVERAGE_AREAS y no tiene posición acá, simplemente no se dibuja su pin.
-const ZONE_LAYOUT: Record<string, { x: number; y: number; primary?: boolean }> = {
-  montevideo: { x: 175, y: 235, primary: true },
-  "las-piedras": { x: 235, y: 115 },
-  canelones: { x: 340, y: 78 },
-  pando: { x: 445, y: 130 },
-  "ciudad-de-la-costa": { x: 480, y: 250 },
+// Coordenadas reales (aprox., a nivel de localidad) de cada zona de
+// COVERAGE_AREAS, para el mapa real de abajo. Si se agrega o saca una zona
+// en COVERAGE_AREAS y no tiene coordenadas acá, simplemente no se dibuja.
+const ZONE_COORDS: Record<string, { lat: number; lng: number; radius: number; primary?: boolean }> = {
+  montevideo: { lat: -34.9011, lng: -56.1645, radius: 7000, primary: true },
+  "las-piedras": { lat: -34.7167, lng: -56.2167, radius: 3000 },
+  canelones: { lat: -34.5385, lng: -56.2760, radius: 3000 },
+  pando: { lat: -34.7167, lng: -55.9500, radius: 3000 },
+  "ciudad-de-la-costa": { lat: -34.7833, lng: -55.9500, radius: 4000 },
 };
-const zones = COVERAGE_AREAS.map((area) => ({ ...area, ...ZONE_LAYOUT[area.slug] })).filter(
-  (z) => typeof z.x === "number"
+const zones = COVERAGE_AREAS.map((area) => ({ ...area, ...ZONE_COORDS[area.slug] })).filter(
+  (z) => typeof z.lat === "number"
 );
-const hub = zones.find((z) => z.primary) ?? zones[0];
 ---
 
 <section id="cobertura" class="bg-white py-16 sm:py-20">
@@ -41,40 +39,17 @@ const hub = zones.find((z) => z.primary) ?? zones[0];
     </div>
 
     <!--
-      Gráfico ilustrativo propio (sin API key ni mapa externo que cargar):
-      marca las 5 zonas de COVERAGE_AREAS como pines conectados a Montevideo.
-      Antes había un iframe de Google Maps centrado en un punto genérico
-      ("Montevideo, Uruguay") que no marcaba ninguna zona en particular.
+      Mapa real (Leaflet + OpenStreetMap, sin API key ni costo) con círculos
+      resaltando las 5 zonas de COVERAGE_AREAS. Reemplaza tanto el iframe de
+      Google Maps genérico original como el gráfico ilustrativo posterior.
     -->
-    <div class="mb-10 overflow-hidden rounded-2xl border border-neutral-200 bg-brand-cream-alt shadow-sm p-2" data-reveal>
-      <svg viewBox="0 0 600 320" class="w-full h-auto" role="img" aria-label={`Zonas cubiertas: ${zones.map((z) => z.name).join(", ")}`}>
-        <path d="M-10 285 Q140 250 300 280 T610 265" fill="none" stroke="#e4e0d3" stroke-width="2" />
-
-        {hub && (
-          <g stroke="#ffc400" stroke-width="1.5" stroke-dasharray="4 5" opacity="0.6">
-            {zones.filter((z) => z !== hub).map((z) => (
-              <line x1={hub.x} y1={hub.y} x2={z.x} y2={z.y} />
-            ))}
-          </g>
-        )}
-
-        {zones.map((z) => (
-          <g>
-            <circle cx={z.x} cy={z.y} r={z.primary ? 9 : 6.5} fill={z.primary ? "#ffc400" : "#141310"} stroke="#faf9f5" stroke-width="2" />
-            <text
-              x={z.x}
-              y={z.primary ? z.y + 30 : z.y - 16}
-              text-anchor="middle"
-              font-family="Inter, system-ui, sans-serif"
-              font-weight={z.primary ? "800" : "600"}
-              font-size={z.primary ? "17" : "14"}
-              fill="#141310"
-            >
-              {z.name}
-            </text>
-          </g>
-        ))}
-      </svg>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <div
+      id="coverage-map"
+      class="mb-10 h-[340px] sm:h-[420px] overflow-hidden rounded-2xl border border-neutral-200 shadow-sm bg-brand-cream-alt"
+      data-reveal
+      data-zones={JSON.stringify(zones.map((z) => ({ name: z.name, lat: z.lat, lng: z.lng, radius: z.radius, primary: !!z.primary })))}
+    >
     </div>
 
     <div data-reveal>
@@ -82,3 +57,40 @@ const hub = zones.find((z) => z.primary) ?? zones[0];
     </div>
   </div>
 </section>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" is:inline></script>
+<script is:inline>
+  // Mapa real de la zona de cobertura (Leaflet + tiles de OpenStreetMap,
+  // gratis y sin API key). Si algo falla o el script de Leaflet no carga
+  // (por ejemplo sin conexión a unpkg.com), la sección de cobertura sigue
+  // funcionando igual: solo no se ve el mapa.
+  try {
+    const container = document.getElementById("coverage-map");
+    if (container && window.L) {
+      const zones = JSON.parse(container.dataset.zones || "[]");
+      if (zones.length) {
+        const map = L.map(container, { scrollWheelZoom: false });
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          maxZoom: 18,
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        }).addTo(map);
+
+        const bounds = L.latLngBounds(zones.map((z) => [z.lat, z.lng]));
+        zones.forEach((z) => {
+          L.circle([z.lat, z.lng], {
+            radius: z.radius,
+            color: "#141310",
+            weight: 1.5,
+            fillColor: "#ffc400",
+            fillOpacity: z.primary ? 0.35 : 0.25,
+          })
+            .addTo(map)
+            .bindTooltip(z.name, { permanent: true, direction: "center", className: "coverage-map-label" });
+        });
+        map.fitBounds(bounds, { padding: [24, 24] });
+      }
+    }
+  } catch {
+    // Si falla, la sección sigue funcionando: solo sin el mapa.
+  }
+</script>

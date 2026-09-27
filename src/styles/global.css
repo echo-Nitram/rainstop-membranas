@@ -305,4 +305,20 @@ header nav a.is-active {
   #calc-result { transition: opacity 150ms ease; transform: none !important; }
 }
 
+/* ---------- etiquetas de zona en el mapa de cobertura (Leaflet) ---------- */
+.coverage-map-label {
+  background: var(--color-brand-cream);
+  border: 1px solid var(--color-brand-black);
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--color-brand-black);
+  box-shadow: none;
+}
+.coverage-map-label::before {
+  display: none;
+}
+
 
