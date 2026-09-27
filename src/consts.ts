@@ -1,7 +1,7 @@
 // Datos centrales del sitio — tocar acá cambia todo el sitio de una.
 
 export const SITE_NAME = "RAINSTOP Impermeabilizaciones";
-export const SITE_URL = "https://rainstopuy.com"; // TODO: actualizar cuando se compre el dominio (ver brief SEO)
+export const SITE_URL = "https://www.rainstopuy.com";
 export const SITE_DESCRIPTION =
   "Impermeabilizamos tu techo con membrana asfáltica: geotextil, mineralizada o aluminizada. Materiales, mano de obra y garantía de 10 años. Presupuesto sin costo por WhatsApp.";
 
