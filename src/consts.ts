@@ -158,10 +158,25 @@ export const TESTIMONIALS: {
   quote: string;
   rating: number;
 }[] = [
-  // {
-  //   name: "Nombre Apellido",
-  //   location: "Malvín, Montevideo",
-  //   quote: "Cita textual corta del cliente, tal cual la dijo o la escribió.",
-  //   rating: 5,
-  // },
+  {
+    name: "Eduardo",
+    location: "Pocitos, Montevideo",
+    quote:
+      "Los llamé un martes de mañana con bastante cagazo porque se me venía la lluvia y ya tenía una mancha fulera en el cielorraso del dormitorio. Me pasaron presupuesto al toque por WhatsApp, vinieron al otro día a revisar el techo y en dos días quedó pronta la membrana aluminizada. Dejaron todo impecable. Da gusto dar con gente seria.",
+    rating: 5,
+  },
+  {
+    name: "Valentina",
+    location: "Ciudad de la Costa, Canelones",
+    quote:
+      "En la costa el salitre y el sol te destruyen el techo si no le ponés algo bueno. Teníamos una membrana vieja toda resquebrajada. Nos recomendaron la aluminizada para proteger del calor y la verdad se nota el cambio adentro de la casa. Muy prolijos para trabajar y cumplieron tal cual con los días que dijeron.",
+    rating: 5,
+  },
+  {
+    name: "Gonzalo",
+    location: "Prado, Montevideo",
+    quote:
+      "Excelente atención. Me explicaron la diferencia entre los tipos de membrana sin intentar venderme la más cara porque sí, sino la que realmente necesitaba la azotea. Trabajo prolijo, precio razonable y te firman la garantía de 10 años en el momento. Los recomiendo sin dudar.",
+    rating: 5,
+  },
 ];
