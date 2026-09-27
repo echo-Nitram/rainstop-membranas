@@ -22,7 +22,7 @@ export const PRICE_PER_M2 = 550;
 // Dejar vacío = esa sección de tracking no se inyecta (no rompe nada).
 // Pegar el ID real cuando el cliente lo pase y listo, no hace falta tocar nada más.
 export const META_PIXEL_ID = "1412384187147809"; // Pixel ID de Meta Business Manager (ADSIA — RAINSTOP Pixel)
-export const GTM_ID = ""; // TODO: Container ID de Google Tag Manager (formato "GTM-XXXXXXX")
+export const GTM_ID = "GTM-MH3KQZS2"; // Container ID de Google Tag Manager
 
 export const INSTAGRAM_URL = "https://www.instagram.com/rainstop_membranas/";
 export const INSTAGRAM_HANDLE = "@rainstop_membranas";
