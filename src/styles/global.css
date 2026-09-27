@@ -29,6 +29,21 @@ body {
   font-family: var(--font-sans);
 }
 
+/* ---------- foco visible (accesibilidad + "se siente interactivo") ---------- */
+/* Un solo anillo consistente en todo el sitio, en vez de depender del azul
+   por defecto del navegador (que casi no se ve sobre fondo negro). Solo se
+   activa por teclado/gestos de accesibilidad (:focus-visible), no en cada click. */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--color-brand-yellow);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+
 h1, h2, h3, .font-display {
   font-family: var(--font-display);
   font-weight: 400;
@@ -60,12 +75,20 @@ h1, h2, h3, .font-display {
 .btn-outline {
   background: transparent;
   border: 2px solid currentColor;
+  transition: background-color 0.15s ease, transform 0.15s ease, filter 0.15s ease;
+}
+.btn-outline:hover {
+  background: rgba(250, 249, 245, 0.12);
 }
 
 .btn-outline-dark {
   background: transparent;
   border: 2px solid var(--color-brand-black);
   color: var(--color-brand-black);
+  transition: background-color 0.15s ease, transform 0.15s ease, filter 0.15s ease;
+}
+.btn-outline-dark:hover {
+  background: rgba(20, 19, 16, 0.06);
 }
 
 /* ---------- carrusel antes/después (scroll-snap nativo, sin JS) ---------- */

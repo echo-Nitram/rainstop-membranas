@@ -1,5 +1,6 @@
 ---
-import { SITE_NAME, PHONE_DISPLAY, TEL_LINK, INSTAGRAM_URL, INSTAGRAM_HANDLE, waLink, WA_MESSAGES } from "../consts";
+import WhatsAppButton from "./WhatsAppButton.astro";
+import { SITE_NAME, PHONE_DISPLAY, TEL_LINK, INSTAGRAM_URL, INSTAGRAM_HANDLE, WA_MESSAGES } from "../consts";
 const year = new Date().getFullYear();
 ---
 
@@ -12,9 +13,9 @@ const year = new Date().getFullYear();
       </p>
     </div>
 
-    <div class="text-sm space-y-2">
+    <div class="text-sm space-y-3">
       <p class="text-neutral-200 font-bold mb-1">Contacto</p>
-      <p><a href={waLink(WA_MESSAGES.floating)} target="_blank" rel="noopener noreferrer" class="hover:text-brand-yellow">WhatsApp: {PHONE_DISPLAY}</a></p>
+      <WhatsAppButton message={WA_MESSAGES.floating} label={`WhatsApp: ${PHONE_DISPLAY}`} class="text-sm! px-5! py-2.5!" />
       <p><a href={TEL_LINK} class="hover:text-brand-yellow">Llamar: {PHONE_DISPLAY}</a></p>
       <p><a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" class="hover:text-brand-yellow">Instagram: {INSTAGRAM_HANDLE}</a></p>
     </div>
