@@ -1,6 +1,22 @@
 ---
 import WhatsAppButton from "./WhatsAppButton.astro";
 import { WA_MESSAGES, COVERAGE_AREAS } from "../consts";
+
+// Posiciones del gráfico ilustrativo (no es un mapa geográficamente exacto,
+// es un esquema de red con Montevideo como base y las zonas alrededor,
+// ubicadas en la dirección aproximada real). Si se agrega o saca una zona en
+// COVERAGE_AREAS y no tiene posición acá, simplemente no se dibuja su pin.
+const ZONE_LAYOUT: Record<string, { x: number; y: number; primary?: boolean }> = {
+  montevideo: { x: 175, y: 235, primary: true },
+  "las-piedras": { x: 235, y: 115 },
+  canelones: { x: 340, y: 78 },
+  pando: { x: 445, y: 130 },
+  "ciudad-de-la-costa": { x: 480, y: 250 },
+};
+const zones = COVERAGE_AREAS.map((area) => ({ ...area, ...ZONE_LAYOUT[area.slug] })).filter(
+  (z) => typeof z.x === "number"
+);
+const hub = zones.find((z) => z.primary) ?? zones[0];
 ---
 
 <section id="cobertura" class="bg-white py-16 sm:py-20">
@@ -25,21 +41,40 @@ import { WA_MESSAGES, COVERAGE_AREAS } from "../consts";
     </div>
 
     <!--
-      Mapa sin API key (formato /maps?q=...&output=embed, público y gratis).
-      TODO: si el cliente tiene una dirección/local físico, reemplazar el query
-      de abajo por esa dirección exacta para centrar el mapa ahí en vez de
-      solo "Montevideo, Uruguay".
+      Gráfico ilustrativo propio (sin API key ni mapa externo que cargar):
+      marca las 5 zonas de COVERAGE_AREAS como pines conectados a Montevideo.
+      Antes había un iframe de Google Maps centrado en un punto genérico
+      ("Montevideo, Uruguay") que no marcaba ninguna zona en particular.
     -->
-    <div class="mb-10 overflow-hidden rounded-2xl border border-neutral-200 shadow-sm" data-reveal>
-      <iframe
-        src="https://www.google.com/maps?q=Montevideo,+Uruguay&z=10&output=embed"
-        width="100%"
-        height="340"
-        style="border:0;"
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-        title="Zona de cobertura de RAINSTOP Impermeabilizaciones"
-      ></iframe>
+    <div class="mb-10 overflow-hidden rounded-2xl border border-neutral-200 bg-brand-cream-alt shadow-sm p-2" data-reveal>
+      <svg viewBox="0 0 600 320" class="w-full h-auto" role="img" aria-label={`Zonas cubiertas: ${zones.map((z) => z.name).join(", ")}`}>
+        <path d="M-10 285 Q140 250 300 280 T610 265" fill="none" stroke="#e4e0d3" stroke-width="2" />
+
+        {hub && (
+          <g stroke="#ffc400" stroke-width="1.5" stroke-dasharray="4 5" opacity="0.6">
+            {zones.filter((z) => z !== hub).map((z) => (
+              <line x1={hub.x} y1={hub.y} x2={z.x} y2={z.y} />
+            ))}
+          </g>
+        )}
+
+        {zones.map((z) => (
+          <g>
+            <circle cx={z.x} cy={z.y} r={z.primary ? 9 : 6.5} fill={z.primary ? "#ffc400" : "#141310"} stroke="#faf9f5" stroke-width="2" />
+            <text
+              x={z.x}
+              y={z.primary ? z.y + 30 : z.y - 16}
+              text-anchor="middle"
+              font-family="Inter, system-ui, sans-serif"
+              font-weight={z.primary ? "800" : "600"}
+              font-size={z.primary ? "17" : "14"}
+              fill="#141310"
+            >
+              {z.name}
+            </text>
+          </g>
+        ))}
+      </svg>
     </div>
 
     <div data-reveal>

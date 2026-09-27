@@ -14,10 +14,10 @@ import { TESTIMONIALS, INSTAGRAM_URL } from "../consts";
         Reseñas de techos ya impermeabilizados
       </h2>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="snap-row md:grid md:grid-cols-3 md:gap-6 md:overflow-visible">
         {TESTIMONIALS.map((t, i) => (
           <div
-            class="tilt-card flex flex-col rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm"
+            class="tilt-card flex flex-col w-[280px] sm:w-[340px] md:w-auto shrink-0 rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm"
             data-reveal="scale"
             style={`transition-delay: ${i * 100}ms`}
           >

@@ -1,6 +1,5 @@
 ---
 import WhatsAppButton from "./WhatsAppButton.astro";
-import ComparisonTable from "./ComparisonTable.astro";
 import { SERVICES } from "../consts";
 ---
 
@@ -15,11 +14,9 @@ import { SERVICES } from "../consts";
       sabés cuál necesitás, contanos el problema y te recomendamos la mejor opción.
     </p>
 
-    <ComparisonTable />
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="snap-row md:grid md:grid-cols-3 md:gap-6 md:overflow-visible">
       {SERVICES.map((s, i) => (
-        <div class="tilt-card flex flex-col rounded-2xl border border-neutral-800 bg-brand-graphite p-6" data-reveal="scale" style={`transition-delay: ${i * 100}ms`}>
+        <div class="tilt-card flex flex-col w-[280px] sm:w-[320px] md:w-auto shrink-0 rounded-2xl border border-neutral-800 bg-brand-graphite p-6" data-reveal="scale" style={`transition-delay: ${i * 100}ms`}>
           <span class="text-xs font-bold uppercase tracking-wide text-brand-yellow mb-2">{s.tagline}</span>
           <h3 class="text-2xl mb-3">{s.name}</h3>
           <p class="text-neutral-400 text-sm mb-4 grow">{s.description}</p>

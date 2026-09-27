@@ -1,6 +1,6 @@
 ---
 import WhatsAppButton from "./WhatsAppButton.astro";
-import { WA_MESSAGES, TEL_LINK } from "../consts";
+import { WA_MESSAGES, TEL_LINK, WORK_SAMPLES } from "../consts";
 
 // Props opcionales para poder reusar este mismo Hero en las páginas de zona
 // (src/pages/zonas/[localidad].astro) sin duplicar el markup.
@@ -17,6 +17,10 @@ const {
   subtitle,
   waMessage = WA_MESSAGES.heroPrimary,
 } = Astro.props;
+
+// Foto real de un trabajo terminado para que no haya tanto texto antes de la
+// primera imagen — mismo criterio de alt que ya usa BeforeAfter.astro.
+const heroPhoto = WORK_SAMPLES[0];
 ---
 
 <section id="inicio" class="relative overflow-hidden bg-brand-black text-brand-cream">
@@ -28,33 +32,50 @@ const {
   </svg>
 
   <div class="relative mx-auto max-w-6xl px-5 sm:px-8 pt-16 pb-20 sm:pt-24 sm:pb-28">
-    <span class="hero-in inline-flex items-center gap-2 rounded-full bg-brand-yellow-bg/10 border border-brand-yellow/40 text-brand-yellow text-xs font-bold tracking-widest uppercase px-4 py-1.5 mb-6">
-      {badge}
-    </span>
+    <div class="lg:grid lg:grid-cols-[1.1fr_0.9fr] lg:gap-12 lg:items-center">
+      <div>
+        <span class="hero-in inline-flex items-center gap-2 rounded-full bg-brand-yellow-bg/10 border border-brand-yellow/40 text-brand-yellow text-xs font-bold tracking-widest uppercase px-4 py-1.5 mb-6">
+          {badge}
+        </span>
 
-    <h1 class="hero-in text-4xl sm:text-5xl md:text-6xl max-w-3xl" style="animation-delay: 90ms">
-      {title}
-    </h1>
+        <h1 class="hero-in text-4xl sm:text-5xl md:text-6xl max-w-3xl" style="animation-delay: 90ms">
+          {title}
+        </h1>
 
-    <p class="hero-in mt-6 max-w-2xl text-lg sm:text-xl text-neutral-300 font-medium" style="animation-delay: 180ms">
-      {subtitle ?? (
-        <>
-          Materiales, mano de obra y terminación profesional en aluminio incluidos —
-          con <span class="text-brand-yellow font-bold">garantía de 10 años</span> y
-          presupuesto sin costo por WhatsApp.
-        </>
-      )}
-    </p>
+        <p class="hero-in mt-6 max-w-2xl text-lg sm:text-xl text-neutral-300 font-medium" style="animation-delay: 180ms">
+          {subtitle ?? (
+            <>
+              Materiales, mano de obra y terminación profesional en aluminio incluidos —
+              con <span class="text-brand-yellow font-bold">garantía de 10 años</span> y
+              presupuesto sin costo por WhatsApp.
+            </>
+          )}
+        </p>
 
-    <div class="hero-in mt-10 flex flex-wrap items-center gap-4" style="animation-delay: 270ms">
-      <WhatsAppButton message={waMessage} label="Pedí tu presupuesto gratis" id="hero-wa-cta" />
-      <a href={TEL_LINK} class="btn btn-outline text-brand-cream">
-        📞 Llamar ahora
-      </a>
+        <div class="hero-in lg:hidden mt-8 rounded-2xl overflow-hidden border border-white/10" style="animation-delay: 220ms">
+          <img src={heroPhoto.after} alt={`${heroPhoto.title} — después`} class="w-full h-52 sm:h-64 object-cover" loading="eager" />
+        </div>
+
+        <div class="hero-in mt-10 flex flex-wrap items-center gap-4" style="animation-delay: 270ms">
+          <WhatsAppButton message={waMessage} label="Pedí tu presupuesto gratis" id="hero-wa-cta" />
+          <a href={TEL_LINK} class="btn btn-outline text-brand-cream">
+            📞 Llamar ahora
+          </a>
+        </div>
+
+        <p class="hero-in mt-6 text-sm text-neutral-400" style="animation-delay: 340ms">
+          Presupuesto sin costo ni compromiso · Te respondemos por WhatsApp en el día
+        </p>
+      </div>
+
+      <div class="hero-in hidden lg:block" style="animation-delay: 220ms">
+        <img
+          src={heroPhoto.after}
+          alt={`${heroPhoto.title} — después`}
+          class="w-full aspect-4/5 object-cover rounded-3xl border border-white/10 shadow-2xl"
+          loading="eager"
+        />
+      </div>
     </div>
-
-    <p class="hero-in mt-6 text-sm text-neutral-400" style="animation-delay: 340ms">
-      Presupuesto sin costo ni compromiso · Te respondemos por WhatsApp en el día
-    </p>
   </div>
 </section>
