@@ -13,6 +13,9 @@
   --font-display: "Anton", system-ui, sans-serif;
   --font-sans: "Inter", system-ui, sans-serif;
   --font-script: "Caveat", cursive;
+
+  /* Curva ease-out ya usada en reveal/tilt — nombrada para reusar en vez de repetir el valor suelto */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 html {
@@ -90,13 +93,67 @@ details.faq summary::-webkit-details-marker { display: none; }
 details.faq .chev { transition: transform 0.2s ease; }
 details.faq[open] .chev { transform: rotate(180deg); }
 
+/* Contenido del FAQ: altura animada con grid-rows (técnica moderna para
+   <details>, sin JS) — antes se abría de golpe, sin transición. */
+details.faq .faq-content {
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 250ms var(--ease-out), opacity 200ms var(--ease-out);
+  transition-behavior: allow-discrete;
+}
+details.faq[open] .faq-content {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+details.faq .faq-content > p {
+  min-height: 0;
+}
+@starting-style {
+  details.faq[open] .faq-content {
+    grid-template-rows: 0fr;
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  details.faq .faq-content { transition: opacity 150ms ease; }
+}
+
+/* ---------- link activo del menú (resalta la sección visible al scrollear) ---------- */
+/* El color ya transiciona por la utilidad `transition-colors` del link (Header.astro) */
+header nav a.is-active {
+  color: var(--color-brand-yellow);
+}
+
 /* ---------- boton flotante WhatsApp ---------- */
 @keyframes wa-pulse {
   0%, 100% { box-shadow: 0 0 0 0 rgba(255, 196, 0, 0.55); }
   50% { box-shadow: 0 0 0 10px rgba(255, 196, 0, 0); }
 }
 .wa-float {
-  animation: wa-pulse 2.6s ease-out infinite;
+  /* 3 pulsos al cargar y se detiene — un pulso infinito para siempre compite
+     con el contenido en vez de solo llamar la atención una vez. */
+  animation: wa-pulse 2.6s ease-out 3;
+  transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out);
+}
+/* Se oculta con un fade mientras el CTA de WhatsApp del header o el del
+   cierre (FinalCta) ya están a la vista, para no mostrar dos botones
+   iguales al mismo tiempo. Sin JS/IO, se queda visible (comportamiento
+   de siempre). */
+.wa-float--hidden {
+  opacity: 0;
+  transform: scale(0.92);
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .wa-float {
+    animation: none;
+    transition: opacity 200ms ease;
+  }
+  .wa-float--hidden {
+    transform: none;
+  }
 }
 
 /* ---------- animación al hacer scroll (data-reveal + IntersectionObserver) ---------- */
@@ -226,6 +283,36 @@ details.faq[open] .chev { transform: rotate(180deg); }
   [data-parallax] {
     transform: none !important;
   }
+}
+
+/* ---------- pista de scroll horizontal en la tabla comparativa (mobile) ---------- */
+.comparison-fade {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0.75rem;
+  width: 32px;
+  pointer-events: none;
+  background: linear-gradient(to right, transparent, var(--color-brand-black));
+  opacity: 1;
+  transition: opacity 200ms var(--ease-out);
+}
+.comparison-fade.is-hidden {
+  opacity: 0;
+}
+
+/* ---------- resultado de la calculadora de presupuesto ---------- */
+#calc-result {
+  opacity: 0;
+  transform: translateY(6px) scale(0.97);
+  transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out);
+}
+#calc-result.is-visible {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  #calc-result { transition: opacity 150ms ease; transform: none !important; }
 }
 
 

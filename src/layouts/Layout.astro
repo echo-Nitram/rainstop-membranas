@@ -339,5 +339,31 @@ const websiteJsonLd = {
         // Si falla el tracking, el link de WhatsApp igual funciona normal.
       }
     </script>
+
+    <script>
+      // Marca en el menú del header cuál sección se está viendo mientras
+      // se scrollea (Servicios / Trabajos / Cobertura / Preguntas).
+      try {
+        const navLinks = Array.from(document.querySelectorAll("header nav a[href^='#']"));
+        const sections = navLinks
+          .map((link) => document.getElementById(link.getAttribute("href").slice(1)))
+          .filter(Boolean);
+
+        if (navLinks.length && sections.length && "IntersectionObserver" in window) {
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                const link = navLinks.find((l) => l.getAttribute("href") === `#${entry.target.id}`);
+                if (link) link.classList.toggle("is-active", entry.isIntersecting);
+              });
+            },
+            { rootMargin: "-45% 0px -45% 0px" } // activa cuando la sección cruza el centro de la pantalla
+          );
+          sections.forEach((s) => observer.observe(s));
+        }
+      } catch {
+        // Si falla, el menú sigue funcionando para navegar, solo sin resaltar la sección activa.
+      }
+    </script>
   </body>
 </html>

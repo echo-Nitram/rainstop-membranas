@@ -1,7 +1,12 @@
 ---
 import { INSTAGRAM_URL, INSTAGRAM_HANDLE, GALLERY_IMAGES } from "../consts";
 
-const [hero, ...rest] = GALLERY_IMAGES;
+// La imagen destacada (más grande) es una foto real de un trabajo, no el
+// gráfico publicitario — una foto real transmite más confianza en el lugar
+// con más peso visual. El resto, incluido ese gráfico, va en las tiles chicas.
+const heroSrc = "/images/gallery/gallery-2.webp";
+const hero = GALLERY_IMAGES.find((img) => img.src === heroSrc) ?? GALLERY_IMAGES[0];
+const rest = GALLERY_IMAGES.filter((img) => img !== hero);
 ---
 
 <section class="bg-brand-black text-brand-cream py-16 sm:py-20">

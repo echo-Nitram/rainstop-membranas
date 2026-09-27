@@ -2,8 +2,9 @@
 import { SERVICES } from "../consts";
 ---
 
-<div class="overflow-x-auto -mx-5 sm:mx-0 mb-14" data-reveal>
-  <table class="w-full min-w-[640px] border-separate border-spacing-0 text-sm">
+<div class="relative -mx-5 sm:mx-0 mb-14">
+  <div class="overflow-x-auto" id="comparison-scroll" data-reveal>
+    <table class="w-full min-w-[640px] border-separate border-spacing-0 text-sm">
     <thead>
       <tr>
         <th class="text-left text-neutral-400 font-semibold uppercase text-xs tracking-wide pb-3 pl-1">
@@ -38,4 +39,26 @@ import { SERVICES } from "../consts";
       </tr>
     </tbody>
   </table>
+  </div>
+  <div class="comparison-fade sm:hidden" aria-hidden="true"></div>
 </div>
+
+<script>
+  // Pista de que la tabla tiene más columnas hacia la derecha en mobile
+  // (donde min-width fuerza scroll horizontal): un fade que desaparece
+  // una vez que el usuario llega al final del scroll.
+  try {
+    const scrollEl = document.getElementById("comparison-scroll");
+    const fade = document.querySelector(".comparison-fade");
+    if (scrollEl && fade) {
+      const update = () => {
+        const atEnd = scrollEl.scrollLeft + scrollEl.clientWidth >= scrollEl.scrollWidth - 4;
+        fade.classList.toggle("is-hidden", atEnd);
+      };
+      scrollEl.addEventListener("scroll", update, { passive: true });
+      update();
+    }
+  } catch {
+    // Si falla, la tabla sigue siendo scrolleable igual, solo sin la pista visual.
+  }
+</script>

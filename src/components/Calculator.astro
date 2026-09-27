@@ -85,8 +85,17 @@ const baseHref = waLink(WA_MESSAGES.pricing).split("?")[0];
       if (hasM2) {
         const price = Math.round(m2 * pricePerM2);
         priceSpan.textContent = price.toLocaleString("es-UY");
-        resultBox.classList.remove("hidden");
+        if (resultBox.classList.contains("hidden")) {
+          resultBox.classList.remove("hidden", "is-visible");
+          // Doble rAF: deja que el navegador pinte el box recién visible en su
+          // estado inicial (opacity:0) antes de agregar la clase que dispara
+          // la transición — si no, el cambio se pierde en el mismo frame.
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => resultBox.classList.add("is-visible"));
+          });
+        }
       } else {
+        resultBox.classList.remove("is-visible");
         resultBox.classList.add("hidden");
       }
 
