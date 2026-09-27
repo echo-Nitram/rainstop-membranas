@@ -1,6 +1,6 @@
 ---
 import WhatsAppButton from "./WhatsAppButton.astro";
-import { WA_MESSAGES } from "../consts";
+import { WA_MESSAGES, TEL_LINK } from "../consts";
 
 // Copy estacional: cambiar este título según la época del año (ver brief de CRO).
 // Otoño/invierno -> "Antes de que lleguen las lluvias, protegé tu techo."
@@ -18,10 +18,18 @@ const seasonalTitle = "Antes de que lleguen las lluvias, protegé tu techo";
     <h2 class="text-3xl sm:text-4xl md:text-5xl mb-5" data-reveal>{seasonalTitle}</h2>
     <p class="text-neutral-300 text-lg mb-9" data-reveal style="transition-delay: 90ms">
       Agendá una visita sin costo y llevate tu techo listo para enfrentar la
-      lluvia, el sol y los cambios de temperatura — con garantía de 10 años.
+      lluvia, el sol y los cambios de temperatura.
     </p>
-    <div data-reveal style="transition-delay: 180ms">
-      <WhatsAppButton message={WA_MESSAGES.finalCta} label="Agendar visita sin costo" id="final-wa-cta" class="text-base px-8 py-4" />
+    <div class="flex flex-wrap items-center justify-center gap-4 mb-8" data-reveal style="transition-delay: 180ms">
+      <WhatsAppButton message={WA_MESSAGES.finalCta} label="Agendar por WhatsApp" id="final-wa-cta" class="text-base px-8 py-4" />
+      <a href={TEL_LINK} class="btn btn-outline text-brand-cream text-base px-8 py-4">
+        📞 Llamar ahora
+      </a>
+    </div>
+    <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm font-bold text-neutral-300" data-reveal style="transition-delay: 240ms">
+      <span class="flex items-center gap-1.5"><span class="text-brand-yellow">✓</span> Garantía de 10 años</span>
+      <span class="flex items-center gap-1.5"><span class="text-brand-yellow">✓</span> Sin costo ni compromiso</span>
+      <span class="flex items-center gap-1.5"><span class="text-brand-yellow">✓</span> Respuesta el mismo día</span>
     </div>
   </div>
 </section>

@@ -1,6 +1,6 @@
 ---
 import WhatsAppButton from "./WhatsAppButton.astro";
-import { WA_MESSAGES, TEL_LINK, WORK_SAMPLES } from "../consts";
+import { WA_MESSAGES, TEL_LINK } from "../consts";
 
 // Props opcionales para poder reusar este mismo Hero en las páginas de zona
 // (src/pages/zonas/[localidad].astro) sin duplicar el markup.
@@ -18,9 +18,13 @@ const {
   waMessage = WA_MESSAGES.heroPrimary,
 } = Astro.props;
 
-// Foto real de un trabajo terminado para que no haya tanto texto antes de la
-// primera imagen — mismo criterio de alt que ya usa BeforeAfter.astro.
-const heroPhoto = WORK_SAMPLES[0];
+// Foto generada con IA (no es un trabajo real de RAINSTOP) para transmitir
+// confianza/calidad sin depender de tener una foto de trabajo ya lista para
+// esta composición. Reemplazar por una foto real del cliente apenas se
+// pueda — ver nota en WORK_SAMPLES (consts.ts) para el resto del sitio, que
+// sí usa fotos reales.
+const heroImg = "/images/hero-ai/hero-confianza.webp";
+const heroImgAlt = "Techo con membrana reflectante recién terminada bajo cielo despejado";
 ---
 
 <section id="inicio" class="relative overflow-hidden bg-brand-black text-brand-cream">
@@ -31,10 +35,10 @@ const heroPhoto = WORK_SAMPLES[0];
     <path d="M120 220 L120 160 L160 160 L160 220" />
   </svg>
 
-  <div class="relative mx-auto max-w-6xl px-5 sm:px-8 pt-16 pb-20 sm:pt-24 sm:pb-28">
-    <div class="lg:grid lg:grid-cols-[1.1fr_0.9fr] lg:gap-12 lg:items-center">
+  <div class="relative mx-auto max-w-6xl px-5 sm:px-8 pt-14 pb-16 sm:pt-20 sm:pb-24">
+    <div class="lg:grid lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:items-center">
       <div>
-        <span class="hero-in inline-flex items-center gap-2 rounded-full bg-brand-yellow-bg/10 border border-brand-yellow/40 text-brand-yellow text-xs font-bold tracking-widest uppercase px-4 py-1.5 mb-6">
+        <span class="hero-in inline-flex items-center gap-2 rounded-full bg-brand-yellow-bg/10 border border-brand-yellow/40 text-brand-yellow text-xs font-bold tracking-widest uppercase px-4 py-1.5 mb-5">
           {badge}
         </span>
 
@@ -42,36 +46,34 @@ const heroPhoto = WORK_SAMPLES[0];
           {title}
         </h1>
 
-        <p class="hero-in mt-6 max-w-2xl text-lg sm:text-xl text-neutral-300 font-medium" style="animation-delay: 180ms">
+        <p class="hero-in mt-5 max-w-2xl text-lg sm:text-xl text-neutral-300 font-medium" style="animation-delay: 180ms">
           {subtitle ?? (
-            <>
-              Materiales, mano de obra y terminación profesional en aluminio incluidos —
-              con <span class="text-brand-yellow font-bold">garantía de 10 años</span> y
-              presupuesto sin costo por WhatsApp.
-            </>
+            <>Materiales, mano de obra y terminación profesional en aluminio incluidos, con presupuesto sin costo por WhatsApp.</>
           )}
         </p>
 
-        <div class="hero-in lg:hidden mt-8 rounded-2xl overflow-hidden border border-white/10" style="animation-delay: 220ms">
-          <img src={heroPhoto.after} alt={`${heroPhoto.title} — después`} class="w-full h-52 sm:h-64 object-cover" loading="eager" />
+        <div class="hero-in mt-7 flex flex-wrap gap-x-6 gap-y-3 text-sm font-bold text-neutral-200" style="animation-delay: 230ms">
+          <span class="flex items-center gap-1.5"><span class="text-brand-yellow">✓</span> 10 años de garantía</span>
+          <span class="flex items-center gap-1.5"><span class="text-brand-yellow">✓</span> Materiales incluidos</span>
+          <span class="flex items-center gap-1.5"><span class="text-brand-yellow">✓</span> Respuesta el mismo día</span>
         </div>
 
-        <div class="hero-in mt-10 flex flex-wrap items-center gap-4" style="animation-delay: 270ms">
-          <WhatsAppButton message={waMessage} label="Pedí tu presupuesto gratis" id="hero-wa-cta" />
-          <a href={TEL_LINK} class="btn btn-outline text-brand-cream">
-            📞 Llamar ahora
-          </a>
+        <div class="hero-in lg:hidden mt-7 rounded-2xl overflow-hidden border border-white/10" style="animation-delay: 260ms">
+          <img src={heroImg} alt={heroImgAlt} class="w-full h-52 sm:h-64 object-cover" loading="eager" />
         </div>
 
-        <p class="hero-in mt-6 text-sm text-neutral-400" style="animation-delay: 340ms">
-          Presupuesto sin costo ni compromiso · Te respondemos por WhatsApp en el día
-        </p>
+        <div class="hero-in mt-7 rounded-2xl bg-brand-yellow-bg/10 border border-brand-yellow/30 p-5 sm:p-6" style="animation-delay: 300ms">
+          <WhatsAppButton message={waMessage} label="Pedí tu presupuesto gratis por WhatsApp" id="hero-wa-cta" class="w-full! text-base! py-4! justify-center" />
+          <div class="mt-3 text-sm">
+            <a href={TEL_LINK} class="text-neutral-300 hover:text-brand-yellow font-semibold">📞 o llamanos, si preferís hablar</a>
+          </div>
+        </div>
       </div>
 
-      <div class="hero-in hidden lg:block" style="animation-delay: 220ms">
+      <div class="hero-in hidden lg:block mt-10 lg:mt-0" style="animation-delay: 220ms">
         <img
-          src={heroPhoto.after}
-          alt={`${heroPhoto.title} — después`}
+          src={heroImg}
+          alt={heroImgAlt}
           class="w-full aspect-4/5 object-cover rounded-3xl border border-white/10 shadow-2xl"
           loading="eager"
         />
