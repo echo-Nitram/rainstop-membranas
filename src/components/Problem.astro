@@ -10,10 +10,10 @@ const consequences = [
 ];
 ---
 
-<section class="bg-brand-cream py-16 sm:py-20">
-  <div class="mx-auto max-w-6xl px-5 sm:px-8 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+<section class="bg-brand-cream py-12 sm:py-20">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8 grid grid-cols-1 md:grid-cols-2 gap-7 sm:gap-10 items-center">
     <div data-reveal="left">
-      <p class="text-xs font-bold tracking-widest uppercase text-brand-yellow mb-2">
+      <p class="text-xs font-bold tracking-widest uppercase text-brand-gold mb-2">
         No esperes a la próxima lluvia
       </p>
       <h2 class="text-3xl sm:text-4xl mb-5">
@@ -30,11 +30,11 @@ const consequences = [
       />
     </div>
 
-    <ul class="grid gap-4">
+    <ul class="grid gap-3 sm:gap-4">
       {consequences.map((c, i) => (
-        <li class="tilt-card flex items-start gap-3 bg-white border border-neutral-200 rounded-2xl p-4" data-reveal="right" style={`transition-delay: ${i * 80}ms`}>
-          <span class="mt-0.5 shrink-0 flex h-7 w-7 items-center justify-center rounded-full bg-brand-yellow-bg text-brand-yellow font-bold">
-            !
+        <li class="tilt-card flex items-start gap-3 bg-white border border-neutral-200 rounded-2xl p-3.5 sm:p-4" data-reveal="right" style={`transition-delay: ${i * 80}ms`}>
+          <span class="mt-0.5 shrink-0 flex h-8 w-8 items-center justify-center rounded-full bg-brand-yellow-bg text-brand-gold">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3s6 6.5 6 11a6 6 0 1 1-12 0c0-4.5 6-11 6-11z"></path></svg>
           </span>
           <span class="text-neutral-700 font-medium">{c}</span>
         </li>

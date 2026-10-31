@@ -17,9 +17,9 @@ const zones = COVERAGE_AREAS.map((area) => ({ ...area, ...ZONE_COORDS[area.slug]
 );
 ---
 
-<section id="cobertura" class="bg-white py-16 sm:py-20">
+<section id="cobertura" class="bg-white py-12 sm:py-20">
   <div class="mx-auto max-w-6xl px-5 sm:px-8 text-center">
-    <p class="text-xs font-bold tracking-widest uppercase text-brand-yellow mb-2" data-reveal>Dónde trabajamos</p>
+    <p class="text-xs font-bold tracking-widest uppercase text-brand-gold mb-2" data-reveal>Dónde trabajamos</p>
     <h2 class="text-3xl sm:text-4xl mb-4" data-reveal>Zona de cobertura en Montevideo y alrededores</h2>
     <p class="text-neutral-600 max-w-xl mx-auto mb-8" data-reveal>
       Si no ves tu localidad en la lista, escribinos igual — es probable que
@@ -31,7 +31,7 @@ const zones = COVERAGE_AREAS.map((area) => ({ ...area, ...ZONE_COORDS[area.slug]
       {COVERAGE_AREAS.map((area) => (
         <a
           href={`/zonas/${area.slug}/`}
-          class="rounded-full bg-brand-cream-alt border border-neutral-200 px-5 py-2 text-sm font-semibold text-neutral-700 hover:bg-brand-yellow hover:border-brand-yellow transition-colors duration-200"
+          class="inline-flex items-center min-h-11 rounded-full bg-brand-cream-alt border border-neutral-200 px-5 py-2 text-sm font-semibold text-neutral-700 hover:bg-brand-yellow hover:border-brand-yellow transition-colors duration-200"
         >
           {area.name}
         </a>
@@ -43,7 +43,6 @@ const zones = COVERAGE_AREAS.map((area) => ({ ...area, ...ZONE_COORDS[area.slug]
       resaltando las 5 zonas de COVERAGE_AREAS. Reemplaza tanto el iframe de
       Google Maps genérico original como el gráfico ilustrativo posterior.
     -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <div
       id="coverage-map"
       class="mb-10 h-[340px] sm:h-[420px] overflow-hidden rounded-2xl border border-neutral-200 shadow-sm bg-brand-cream-alt"
@@ -51,6 +50,7 @@ const zones = COVERAGE_AREAS.map((area) => ({ ...area, ...ZONE_COORDS[area.slug]
       data-zones={JSON.stringify(zones.map((z) => ({ name: z.name, lat: z.lat, lng: z.lng, radius: z.radius, primary: !!z.primary })))}
     >
     </div>
+    <p class="touch-only -mt-6 mb-8 text-xs text-neutral-500">Usá dos dedos para mover y acercar el mapa.</p>
 
     <div data-reveal>
       <WhatsAppButton message={WA_MESSAGES.pricing} label="Consultar mi zona" variant="outline-dark" />
@@ -58,25 +58,29 @@ const zones = COVERAGE_AREAS.map((area) => ({ ...area, ...ZONE_COORDS[area.slug]
   </div>
 </section>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" is:inline></script>
 <script is:inline>
-  // Mapa real de la zona de cobertura (Leaflet + tiles de OpenStreetMap,
-  // gratis y sin API key). Si algo falla o el script de Leaflet no carga
-  // (por ejemplo sin conexión a unpkg.com), la sección de cobertura sigue
-  // funcionando igual: solo no se ve el mapa.
-  try {
-    const container = document.getElementById("coverage-map");
-    if (container && window.L) {
-      const zones = JSON.parse(container.dataset.zones || "[]");
-      if (zones.length) {
-        const map = L.map(container, { scrollWheelZoom: false });
+  // Mapa real (Leaflet + OpenStreetMap, sin API key). Se descarga recién
+  // cuando la sección está por entrar en pantalla, así no pesa en la primera
+  // carga del celular. En pantallas táctiles el mapa se mueve con dos dedos
+  // para no trabar el scroll de la página. Si algo falla, la sección sigue
+  // funcionando sin el mapa.
+  (function () {
+    var container = document.getElementById("coverage-map");
+    if (!container) return;
+    var started = false;
+
+    function init() {
+      try {
+        var zones = JSON.parse(container.dataset.zones || "[]");
+        if (!window.L || !zones.length) return;
+        var touch = window.matchMedia("(hover: none)").matches;
+        var map = L.map(container, { scrollWheelZoom: false, dragging: !touch, tap: false });
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
           maxZoom: 18,
           attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
         }).addTo(map);
-
-        const bounds = L.latLngBounds(zones.map((z) => [z.lat, z.lng]));
-        zones.forEach((z) => {
+        var bounds = L.latLngBounds(zones.map(function (z) { return [z.lat, z.lng]; }));
+        zones.forEach(function (z) {
           L.circle([z.lat, z.lng], {
             radius: z.radius,
             color: "#141310",
@@ -88,9 +92,33 @@ const zones = COVERAGE_AREAS.map((area) => ({ ...area, ...ZONE_COORDS[area.slug]
             .bindTooltip(z.name, { permanent: true, direction: "center", className: "coverage-map-label" });
         });
         map.fitBounds(bounds, { padding: [24, 24] });
-      }
+      } catch (e) {}
     }
-  } catch {
-    // Si falla, la sección sigue funcionando: solo sin el mapa.
-  }
+
+    function load() {
+      if (started) return;
+      started = true;
+      var css = document.createElement("link");
+      css.rel = "stylesheet";
+      css.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+      css.integrity = "sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=";
+      css.crossOrigin = "";
+      document.head.appendChild(css);
+      var js = document.createElement("script");
+      js.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+      js.integrity = "sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=";
+      js.crossOrigin = "";
+      js.onload = init;
+      document.head.appendChild(js);
+    }
+
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        if (entries.some(function (e) { return e.isIntersecting; })) { io.disconnect(); load(); }
+      }, { rootMargin: "600px 0px" });
+      io.observe(container);
+    } else {
+      load();
+    }
+  })();
 </script>

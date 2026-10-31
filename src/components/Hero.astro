@@ -18,13 +18,9 @@ const {
   waMessage = WA_MESSAGES.heroPrimary,
 } = Astro.props;
 
-// Foto generada con IA (no es un trabajo real de RAINSTOP) para transmitir
-// confianza/calidad sin depender de tener una foto de trabajo ya lista para
-// esta composición. Reemplazar por una foto real del cliente apenas se
-// pueda — ver nota en WORK_SAMPLES (consts.ts) para el resto del sitio, que
-// sí usa fotos reales.
-const heroImg = "/images/hero-ai/hero-confianza.webp";
-const heroImgAlt = "Techo con membrana reflectante recién terminada bajo cielo despejado";
+// Foto real de un trabajo de RAINSTOP (techo terminado con membrana aluminizada).
+const heroImg = "/images/trabajos/trabajo1-despues.webp";
+const heroImgAlt = "Techo terminado con membrana aluminizada, trabajo real de RAINSTOP en Montevideo";
 ---
 
 <section id="inicio" class="relative overflow-hidden bg-brand-black text-brand-cream">
@@ -35,7 +31,7 @@ const heroImgAlt = "Techo con membrana reflectante recién terminada bajo cielo 
     <path d="M120 220 L120 160 L160 160 L160 220" />
   </svg>
 
-  <div class="relative mx-auto max-w-6xl px-5 sm:px-8 pt-14 pb-16 sm:pt-20 sm:pb-24">
+  <div class="relative mx-auto max-w-6xl px-5 sm:px-8 pt-10 pb-12 sm:pt-20 sm:pb-24">
     <div class="lg:grid lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:items-center">
       <div>
         <span class="hero-in inline-flex items-center gap-2 rounded-full bg-brand-yellow-bg/10 border border-brand-yellow/40 text-brand-yellow text-xs font-bold tracking-widest uppercase px-4 py-1.5 mb-5">
@@ -59,7 +55,7 @@ const heroImgAlt = "Techo con membrana reflectante recién terminada bajo cielo 
         </div>
 
         <div class="hero-in lg:hidden mt-7 rounded-2xl overflow-hidden border border-white/10" style="animation-delay: 260ms">
-          <img src={heroImg} alt={heroImgAlt} class="w-full h-52 sm:h-64 object-cover" loading="eager" />
+          <img src={heroImg} alt={heroImgAlt} class="w-full h-52 sm:h-64 object-cover object-[50%_72%]" loading="eager" />
         </div>
 
         <div class="hero-in mt-7 rounded-2xl bg-brand-yellow-bg/10 border border-brand-yellow/30 p-5 sm:p-6" style="animation-delay: 300ms">

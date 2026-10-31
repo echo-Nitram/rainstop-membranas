@@ -5,9 +5,9 @@ import { TESTIMONIALS, INSTAGRAM_URL } from "../consts";
 ---
 
 {TESTIMONIALS.length > 0 && (
-  <section id="testimonios" class="bg-brand-cream py-16 sm:py-20">
+  <section id="testimonios" class="bg-brand-cream py-12 sm:py-20">
     <div class="mx-auto max-w-6xl px-5 sm:px-8">
-      <p class="text-xs font-bold tracking-widest uppercase text-brand-yellow mb-2 text-center" data-reveal>
+      <p class="text-xs font-bold tracking-widest uppercase text-brand-gold mb-2 text-center" data-reveal>
         Lo que dicen nuestros clientes
       </p>
       <h2 class="text-3xl sm:text-4xl mb-12 text-center" data-reveal>
@@ -36,9 +36,9 @@ import { TESTIMONIALS, INSTAGRAM_URL } from "../consts";
                 </svg>
               ))}
             </div>
-            <p class="font-script text-2xl leading-snug text-neutral-800 mb-5 grow">
-              “{t.quote}”
-            </p>
+            <div class="grow mb-5">
+              <p class="quote font-script text-2xl leading-snug text-neutral-800">“{t.quote}”</p>
+            </div>
             <div>
               <p class="font-bold text-neutral-900">{t.name}</p>
               <p class="text-sm text-neutral-500">{t.location}</p>
@@ -55,3 +55,25 @@ import { TESTIMONIALS, INSTAGRAM_URL } from "../consts";
     </div>
   </section>
 )}
+
+<script>
+  // Recorta cada reseña a 5 líneas y agrega "Leer más" solo si hace falta.
+  // Sin JS se ve el texto completo (el recorte se aplica desde acá).
+  try {
+    document.querySelectorAll("#testimonios .quote").forEach((p) => {
+      p.classList.add("line-clamp-5");
+      if (p.scrollHeight <= p.clientHeight + 1) { p.classList.remove("line-clamp-5"); return; }
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.textContent = "Leer más";
+      btn.className = "mt-2 min-h-11 text-sm font-bold text-brand-gold underline underline-offset-2";
+      btn.setAttribute("aria-expanded", "false");
+      btn.addEventListener("click", () => {
+        const open = p.classList.toggle("line-clamp-5") === false;
+        btn.textContent = open ? "Leer menos" : "Leer más";
+        btn.setAttribute("aria-expanded", String(open));
+      });
+      p.parentElement.appendChild(btn);
+    });
+  } catch {}
+</script>

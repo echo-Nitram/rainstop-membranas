@@ -3,9 +3,9 @@ import WhatsAppButton from "./WhatsAppButton.astro";
 import { FAQ_ITEMS, WA_MESSAGES } from "../consts";
 ---
 
-<section id="faq" class="bg-brand-cream-alt py-16 sm:py-20">
+<section id="faq" class="bg-brand-cream-alt py-12 sm:py-20">
   <div class="mx-auto max-w-3xl px-5 sm:px-8">
-    <p class="text-xs font-bold tracking-widest uppercase text-brand-yellow mb-2 text-center" data-reveal>Dudas frecuentes</p>
+    <p class="text-xs font-bold tracking-widest uppercase text-brand-gold mb-2 text-center" data-reveal>Dudas frecuentes</p>
     <h2 class="text-3xl sm:text-4xl mb-10 text-center" data-reveal>
       Preguntas frecuentes sobre impermeabilización de techos
     </h2>
@@ -13,7 +13,7 @@ import { FAQ_ITEMS, WA_MESSAGES } from "../consts";
     <div class="space-y-3">
       {FAQ_ITEMS.map((item, i) => (
         <details class="faq group rounded-2xl border border-neutral-200 bg-white px-5 py-4 open:shadow-sm transition-shadow" data-reveal style={`transition-delay: ${i * 60}ms`}>
-          <summary class="flex items-center justify-between gap-4 font-bold text-neutral-900">
+          <summary class="flex items-center justify-between gap-4 font-bold text-neutral-900 min-h-11">
             <span>{item.q}</span>
             <svg class="chev shrink-0 text-brand-yellow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M6 9l6 6 6-6"></path>
