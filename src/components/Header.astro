@@ -1,6 +1,6 @@
 ---
 import WhatsAppButton from "./WhatsAppButton.astro";
-import { WA_MESSAGES } from "../consts";
+import { WA_MESSAGES, TEL_LINK, PHONE_DISPLAY } from "../consts";
 
 const navLinks = [
   { href: "#servicios", label: "Servicios" },
@@ -24,10 +24,15 @@ const navLinks = [
       ))}
     </nav>
 
-    <WhatsAppButton
-      message={WA_MESSAGES.heroPrimary}
-      label="Escribinos"
-      class="py-2! px-4! text-sm! shrink-0"
-    />
+    <div class="flex items-center gap-4 shrink-0">
+      <a href={TEL_LINK} data-call-cta="Header" class="hidden lg:inline-flex items-center gap-1.5 text-sm font-bold text-brand-cream hover:text-brand-yellow">
+        <span aria-hidden="true">📞</span> {PHONE_DISPLAY}
+      </a>
+      <WhatsAppButton
+        message={WA_MESSAGES.heroPrimary}
+        label="Escribinos"
+        class="py-2! px-4! text-sm! shrink-0"
+      />
+    </div>
   </div>
 </header>

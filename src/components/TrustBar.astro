@@ -23,7 +23,7 @@ const paths: Record<string, string> = {
         </svg>
         {item.counter ? (
           <p class="text-xs sm:text-sm font-semibold text-neutral-300 leading-snug">
-            <span class="font-display text-2xl sm:text-3xl text-brand-yellow" data-counter={item.counter}>0</span>
+            <span class="font-display text-2xl sm:text-3xl text-brand-yellow" data-counter={item.counter}>{item.counter}</span>
             {" "}{item.text}
           </p>
         ) : (

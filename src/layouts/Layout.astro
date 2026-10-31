@@ -155,7 +155,7 @@ const websiteJsonLd = {
       </noscript>
     )}
   </head>
-  <body>
+  <body class="pb-20 sm:pb-0">
     {GTM_ID && (
       <noscript>
         <iframe src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`} height="0" width="0" style="display:none;visibility:hidden" title="gtm" />
@@ -317,19 +317,28 @@ const websiteJsonLd = {
       // Google Tag Manager / GA4 (si GTM_ID está seteado) y Meta Pixel
       // (si META_PIXEL_ID está seteado). No rompe nada si alguno no está.
       try {
+        const deviceType = window.matchMedia("(max-width: 767px)").matches ? "mobile" : "desktop";
         document.addEventListener("click", (e) => {
+          const callEl = e.target.closest("[data-call-cta]");
+          if (callEl) {
+            const label = callEl.getAttribute("data-call-cta") || "Llamar";
+            if (typeof window.va === "function") window.va("event", { name: "call_click", cta: label, device: deviceType });
+            if (window.dataLayer) window.dataLayer.push({ event: "call_click", cta_label: label, device_type: deviceType });
+            if (typeof window.fbq === "function") window.fbq("track", "Contact", { content_name: label, method: "call" });
+            return;
+          }
           const target = e.target.closest("[data-wa-cta]");
           if (!target) return;
           const ctaLabel = target.getAttribute("data-wa-cta") || "WhatsApp";
 
           // Vercel Analytics — evento personalizado
           if (typeof window.va === "function") {
-            window.va("event", { name: "whatsapp_click", cta: ctaLabel });
+            window.va("event", { name: "whatsapp_click", cta: ctaLabel, device: deviceType });
           }
 
           // GTM / GA4
           if (window.dataLayer) {
-            window.dataLayer.push({ event: "generate_lead", cta_label: ctaLabel });
+            window.dataLayer.push({ event: "generate_lead", cta_label: ctaLabel, device_type: deviceType });
           }
 
           // Meta Pixel

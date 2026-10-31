@@ -16,7 +16,7 @@ const year = new Date().getFullYear();
     <div class="text-sm space-y-3">
       <p class="text-neutral-200 font-bold mb-1">Contacto</p>
       <WhatsAppButton message={WA_MESSAGES.floating} label={`WhatsApp: ${PHONE_DISPLAY}`} class="text-sm! px-5! py-2.5!" />
-      <p><a href={TEL_LINK} class="hover:text-brand-yellow">Llamar: {PHONE_DISPLAY}</a></p>
+      <p><a href={TEL_LINK} data-call-cta="Footer" class="hover:text-brand-yellow">Llamar: {PHONE_DISPLAY}</a></p>
       <p><a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" class="hover:text-brand-yellow">Instagram: {INSTAGRAM_HANDLE}</a></p>
     </div>
 
